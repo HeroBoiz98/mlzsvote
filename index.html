@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Election Website</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .candidate-buttons {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .candidate-buttons button {
+      margin: 0 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Election Website</h1>
+
+  <h2>Cast Your Vote</h2>
+  <div class="candidate-buttons">
+    <button onclick="castVote('candidate1')">Candidate 1</button>
+    <button onclick="castVote('candidate2')">Candidate 2</button>
+    <button onclick="castVote('candidate3')">Candidate 3</button>
+  </div>
+
+  <script>
+    function castVote(candidate) {
+      fetch('/vote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ candidate: candidate })
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.message);
+      })
+      .catch(error => {
+        alert('An error occurred while recording your vote');
+        console.error(error);
+      });
+    }
+  </script>
+</body>
+</html>

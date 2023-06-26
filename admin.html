@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Election Results - Admin Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .results-list {
+      list-style-type: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+    .results-list li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .results-list li span {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Election Results - Admin Page</h1>
+
+  <h2>Live Results</h2>
+  <ul class="results-list">
+    <li>
+      <span>Candidate 1:</span>
+      <span id="candidate1-votes">0</span>
+    </li>
+    <li>
+      <span>Candidate 2:</span>
+      <span id="candidate2-votes">0</span>
+    </li>
+    <li>
+      <span>Candidate 3:</span>
+      <span id="candidate3-votes">0</span>
+    </li>
+  </ul>
+
+  <script>
+    function updateResults() {
+      fetch('/results')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('candidate1-votes').textContent = data.candidate1 || 0;
+          document.getElementById('candidate2-votes').textContent = data.candidate2 || 0;
+          document.getElementById('candidate3-votes').textContent = data.candidate3 || 0;
+        })
+        .catch(error => {
+          console.error('An error occurred while fetching results', error);
+        });
+    }
+
+    setInterval(updateResults, 2000); // Update results every 2 seconds
+  </script>
+</body>
+</html>
